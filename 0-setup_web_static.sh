@@ -40,14 +40,11 @@ chown -hR ubuntu:ubuntu /data/
 # Updating nginx configuration to serve specified directory
 echo "Editing config file"
 if ! grep -q "^ *location /hbnb_static {" /etc/nginx/nginx.conf; then
-	sed -i '/^http {/a\
-	server {\
-		location /hbnb_static {\
-			alias /data/web_static/current/;\
-			autoindex off;\
-		}\
-	}\
-	' /etc/nginx/nginx.conf
+	sed -i '/server_name _;/a\
+	location /hbnb_static {\
+		alias /data/web_static/current/;\
+		autoindex off;\
+	}' /etc/nginx/sites-available/default
 fi
 
 # Restarting nginx service
