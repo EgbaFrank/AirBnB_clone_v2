@@ -8,7 +8,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Install nginx if not installed
-if ! dpkg -l nginx; then
+if ! dpkg -l nginx > "/dev/null"; then
 	echo "Nginx not installed, installing..."
 	apt update && apt -y upgrade
 	apt -y install nginx
@@ -39,8 +39,9 @@ chown -hR ubuntu:ubuntu /data/
 
 # Updating nginx configuration to serve specified directory
 echo "Editing config file"
-if ! grep -q "^ *location /hbnb_static {" /etc/nginx/nginx.conf; then
+if ! grep -q "^ *location /hbnb_static {" /etc/nginx/sites-available/default; then
 	sed -i '/server_name _;/a\
+\
 	location /hbnb_static {\
 		alias /data/web_static/current/;\
 		autoindex off;\
