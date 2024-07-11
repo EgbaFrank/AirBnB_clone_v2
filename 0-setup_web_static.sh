@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Sets up web servers for static deployment
+# shellcheck disable=SC1004
 
 # Setup root privilege
 if [ "$(id -u)" -ne 0 ]; then
