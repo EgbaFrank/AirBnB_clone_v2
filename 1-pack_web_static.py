@@ -17,7 +17,7 @@ def do_pack():
     dt = datetime.now().strftime("%Y%m%d%H%M%S")
     ar_name = "web_static_{}.tgz".format(dt)
     local('mkdir -p versions')
-    result = local('tar -czvf versions/{} -C web_static .'.format(ar_name))
+    result = local('tar -czvf versions/{} web_static'.format(ar_name))
 
     if result.succeeded:
         print(f"Successfully created archive at versions/{ar_name}")
