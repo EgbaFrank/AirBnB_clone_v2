@@ -9,7 +9,7 @@ from fabric.api import env, local, put, run
 
 env.hosts = ['52.90.15.81', '18.204.11.162']
 env.user = 'ubuntu'
-env.key_filename = os.path.expanduser('~/.ssh/school')
+# env.key_filename = os.path.expanduser('~/.ssh/school')
 
 
 def do_pack():
@@ -22,7 +22,7 @@ def do_pack():
     dt = datetime.now().strftime("%Y%m%d%H%M%S")
     archive_name = f"web_static_{dt}.tgz"
     local('mkdir -p versions')
-    result = local(f'tar -czvf versions/{archive_name} web_static')
+    result = local(f'tar -czvf versions/{archive_name} -C web_static .')
 
     if result.succeeded:
         print(f"Successfully created archive at versions/{archive_name}")
@@ -75,18 +75,6 @@ def do_deploy(archive_path):
     result = run(f"rm {remote_path}")
     if result.failed:
         print(f"Failed to remove archive {remote_path}")
-        return False
-
-    # Move contents of web_static folder to the target directory
-    result = run(f"mv {target_dir}/web_static/* {target_dir}")
-    if result.failed:
-        print(f"Failed to move {target_dir}/web_static content")
-        return False
-
-    # Remove the now empty web_static directory
-    result = run(f"rmdir {target_dir}/web_static")
-    if result.failed:
-        print(f"Failed to delete {target_dir}/web_static")
         return False
 
     # Remove the current symbolic link to the old release
