@@ -64,3 +64,7 @@ class FileStorage:
         if obj:
             key = obj.to_dict()['__class__'] + '.' + obj.id
             del FileStorage.__objects[key]
+
+    def close(self):
+        """Closes current storage session"""
+        reload()

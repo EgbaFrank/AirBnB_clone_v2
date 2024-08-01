@@ -21,14 +21,14 @@ class State(BaseModel, Base):
                 )
 
     else:
-        from models import storage
-
         @property
         def cities(self):
+            from models.city import City
+            from models import storage
             all_cities = storage.all(City)
             my_cities = []
 
-            for city in all_cities:
+            for ID, city in all_cities.items():
                 if city.state_id == self.id:
                     my_cities.append(city)
 
