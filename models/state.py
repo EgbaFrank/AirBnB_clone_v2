@@ -17,6 +17,7 @@ class State(BaseModel, Base):
         cities = relationship(
                 'City',
                 backref='state',
+                order_by='City.name',
                 cascade='all, delete-orphan'
                 )
 
