@@ -53,7 +53,9 @@ class DBStorage:
 
             for cls in classes:
                 if issubclass(cls, Base):
-                    objs.extend(self.__session.query(cls).order_by(cls.name).all())
+                    objs.extend(
+                            self.__session.query(cls).order_by(cls.name).all()
+                    )
 
         # Create unique keys for each object and add them to the dictionary
         for obj in objs:
